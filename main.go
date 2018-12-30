@@ -28,6 +28,7 @@ func main() {
 	router.PathPrefix("/www/").Handler(http.StripPrefix("/www/", http.FileServer(http.Dir(filepath.Join(path, "www")))))
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		templ.ExecuteTemplate(w, "index", nil)
+		log.Println(r.RemoteAddr, r.RequestURI)
 	})
 
 	http.ListenAndServe(":"+*port, router)
